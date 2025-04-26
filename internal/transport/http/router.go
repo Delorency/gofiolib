@@ -23,6 +23,10 @@ func NewRouter(cont *container.Container, logger *log.Logger) *chi.Mux {
 	handlers := hP.NewPersonHandler(cont.PersonService, logger)
 
 	router.Post("/person", handlers.Create)
+	router.Get("/person", handlers.List)
+	router.Get("/person/{id}", handlers.Retrieve)
+	router.Put("/person/{id}", handlers.Update)
+	router.Delete("/person/{id}", handlers.Delete)
 
 	return router
 }

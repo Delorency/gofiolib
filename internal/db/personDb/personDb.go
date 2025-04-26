@@ -3,14 +3,17 @@ package persondb
 import (
 	"fiolib/internal/models"
 
+	schemes "fiolib/internal/schemes"
+
 	"gorm.io/gorm"
 )
 
 type PersonDBI interface {
-	// List(*schemes.Pagination) (*[]models.Group, error)
+	List(*schemes.Pagination) (*[]models.Person, error)
 	Create(*models.Person) error
-	// Update(uint, *models.Group) (*models.Group, error)
-	// Retrieve(uint) (*models.Group, error)
+	Update(uint, *models.Person) (*models.Person, error)
+	Retrieve(uint) (*models.Person, error)
+	Delete(uint) error
 }
 
 type personDB struct {

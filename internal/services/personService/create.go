@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func (s *personService) Create(data *models.Person) error {
+func (ps *personService) Create(data *models.Person) error {
 	resp, err := http.Get(fmt.Sprintf("https://api.agify.io/?name=%s", data.Name))
 	if err != nil {
 		log.Fatalf("Ошибка при запросе: %v", err)
@@ -48,5 +48,5 @@ func (s *personService) Create(data *models.Person) error {
 		data.Nat = ""
 	}
 
-	return s.repo.Create(data)
+	return ps.repo.Create(data)
 }
