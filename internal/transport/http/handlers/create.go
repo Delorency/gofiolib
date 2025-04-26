@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 
 	l "fiolib/internal/logger"
@@ -22,13 +23,15 @@ type requestCreate struct {
 func (gh *personHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req requestCreate
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	bodyBytes, _ := io.ReadAll(r.Body)
+
+	if err := json.Unmarshal(bodyBytes, &req); err != nil {
 		response.NewResponse(
 			e.NewError(""),
 			http.StatusInternalServerError,
 			w,
 		)
-		gh.logger.Println(l.GetLogEntry(r, http.StatusInternalServerError))
+		gh.logger.Println(l.GetLogEntry(r, http.StatusInternalServerError, bodyBytes))
 		return
 	}
 
@@ -40,7 +43,7 @@ func (gh *personHandler) Create(w http.ResponseWriter, r *http.Request) {
 				http.StatusBadRequest,
 				w,
 			)
-			gh.logger.Println(l.GetLogEntry(r, http.StatusBadRequest))
+			gh.logger.Println(l.GetLogEntry(r, http.StatusBadRequest, bodyBytes))
 			return
 		}
 	}
@@ -53,14 +56,13 @@ func (gh *personHandler) Create(w http.ResponseWriter, r *http.Request) {
 			http.StatusInternalServerError,
 			w,
 		)
-		gh.logger.Println(l.GetLogEntry(r, http.StatusInternalServerError))
+		gh.logger.Println(l.GetLogEntry(r, http.StatusInternalServerError, bodyBytes))
 		return
 	}
-
 	response.NewResponse(
 		obj,
 		http.StatusCreated,
 		w,
 	)
-	gh.logger.Println(l.GetLogEntry(r, http.StatusCreated))
+	gh.logger.Println(l.GetLogEntry(r, http.StatusCreated, bodyBytes))
 }

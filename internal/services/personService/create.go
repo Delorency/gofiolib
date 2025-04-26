@@ -27,7 +27,7 @@ func (s *personService) Create(data *models.Person) error {
 		log.Fatalf("Ошибка при декодировании JSON: %v", err)
 	}
 
-	resp, err = http.Get(fmt.Sprintf("https://api.agify.io/?name=%s", data.Name))
+	resp, err = http.Get(fmt.Sprintf("https://api.nationalize.io/?name=%s", data.Name))
 	if err != nil {
 		log.Fatalf("Ошибка при запросе: %v", err)
 	}
@@ -42,7 +42,11 @@ func (s *personService) Create(data *models.Person) error {
 	if err := json.NewDecoder(resp.Body).Decode(&r); err != nil {
 		log.Fatalf("Ошибка при декодировании JSON: %v", err)
 	}
-	data.Nat = r.Countries[0].CountryID
+	if len(r.Countries) > 0 {
+		data.Nat = r.Countries[0].CountryID
+	} else {
+		data.Nat = ""
+	}
 
 	return s.repo.Create(data)
 }

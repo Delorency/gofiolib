@@ -1,0 +1,6 @@
+2025/04/26 16:52:33 Set IP: localhost:8081
+2025/04/26 16:52:33 Starting server
+2025/04/26 16:52:43 {"Status":201,"method":"POST","url":"/person","ip":"127.0.0.1:42444","headers":{"Accept":"*/*","Accept-Encoding":"gzip, deflate, br","Connection":"keep-alive","Content-Length":"76","Content-Type":"application/json","Postman-Token":"bb68025e-28a7-4858-bf1b-fd38362c56ae","User-Agent":"PostmanRuntime/7.37.3"},"request_body":{"name":"dmitriy","patronymic":"Urivich","surname":"Popsov"}}
+2025/04/26 16:54:55 Set IP: localhost:8081
+2025/04/26 16:54:55 Starting server
+2025/04/26 16:56:55 {"Status":201,"method":"POST","url":"/person","ip":"127.0.0.1:45530","headers":{"Accept":"*/*","Accept-Encoding":"gzip, deflate, br","Connection":"keep-alive","Content-Length":"76","Content-Type":"application/json","Postman-Token":"0656fa6f-e988-4c43-9e7a-af1d2e5caa6c","User-Agent":"PostmanRuntime/7.37.3"},"request_body":{"name":"dmitriy","patronymic":"Urivich","surname":"Popsov"}}

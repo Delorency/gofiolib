@@ -1,24 +1,15 @@
 package logger
 
 import (
-	"bytes"
 	"encoding/json"
-	"io"
 	"log"
 	"net/http"
 )
 
-func GetLogEntry(r *http.Request, status int) string {
+func GetLogEntry(r *http.Request, status int, body []byte) string {
 	var requestBody map[string]string
 
-	err := json.NewDecoder(r.Body).Decode(&requestBody)
-	if err != nil && err != io.EOF {
-		log.Println(err)
-		return ""
-	}
-
-	bodyBytes, _ := json.Marshal(requestBody)
-	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+	err := json.Unmarshal(body, &requestBody)
 
 	logEntry := APILogEntry{
 		Method:      r.Method,

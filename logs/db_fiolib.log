@@ -1,0 +1,18 @@
+
+2025/04/26 16:52:33 [32m/home/delorency/go/pkg/mod/github.com/go-gormigrate/gormigrate/v2@v2.1.4/gormigrate.go:401
+[0m[33m[3.693ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'migrations' AND table_type = 'BASE TABLE'
+
+2025/04/26 16:52:33 [32m/home/delorency/go/pkg/mod/github.com/go-gormigrate/gormigrate/v2@v2.1.4/gormigrate.go:412
+[0m[33m[0.536ms] [34;1m[rows:1][0m SELECT count(*) FROM "migrations" WHERE id = '20240425_create_person_table'
+
+2025/04/26 16:52:43 [32m/home/delorency/work/gofiolib/internal/db/personDb/create.go:6
+[0m[33m[6.171ms] [34;1m[rows:1][0m INSERT INTO "persons" ("created_at","updated_at","deleted_at","name","surname","patronymic","age","gender","nat") VALUES ('2025-04-26 16:52:43.691','2025-04-26 16:52:43.691',NULL,'dmitriy','Popsov','Urivich',44,'male','') RETURNING "id"
+
+2025/04/26 16:54:55 [32m/home/delorency/go/pkg/mod/github.com/go-gormigrate/gormigrate/v2@v2.1.4/gormigrate.go:401
+[0m[33m[2.458ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'migrations' AND table_type = 'BASE TABLE'
+
+2025/04/26 16:54:55 [32m/home/delorency/go/pkg/mod/github.com/go-gormigrate/gormigrate/v2@v2.1.4/gormigrate.go:412
+[0m[33m[0.409ms] [34;1m[rows:1][0m SELECT count(*) FROM "migrations" WHERE id = '20240425_create_person_table'
+
+2025/04/26 16:56:55 [32m/home/delorency/work/gofiolib/internal/db/personDb/create.go:6
+[0m[33m[5.840ms] [34;1m[rows:1][0m INSERT INTO "persons" ("created_at","updated_at","deleted_at","name","surname","patronymic","age","gender","nat") VALUES ('2025-04-26 16:56:55.899','2025-04-26 16:56:55.899',NULL,'dmitriy','Popsov','Urivich',44,'male','UA') RETURNING "id"

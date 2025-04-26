@@ -22,7 +22,7 @@ func NewRouter(cont *container.Container, logger *log.Logger) *chi.Mux {
 	router := AddMiddleware(chi.NewRouter())
 	handlers := hP.NewPersonHandler(cont.PersonService, logger)
 
-	router.Get("/person", handlers.Create)
+	router.Post("/person", handlers.Create)
 
 	return router
 }
