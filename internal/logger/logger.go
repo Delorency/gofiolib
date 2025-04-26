@@ -9,20 +9,6 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-type APIL struct {
-	Logger *log.Logger
-	File   *os.File
-}
-type DBL struct {
-	Logger logger.Interface
-	File   *os.File
-}
-
-type CLogger struct {
-	APIl *APIL
-	DBl  *DBL
-}
-
 func MakeLoggerFile(path string) *os.File {
 	dir := filepath.Dir(path)
 	err := os.MkdirAll(dir, os.ModePerm)
@@ -36,9 +22,17 @@ func MakeLoggerFile(path string) *os.File {
 
 	return logFile
 }
-func GetLogger(apiFile, DbFile *os.File) *CLogger {
-	logger := logger.New(
-		log.New(DbFile, "\r\n", log.LstdFlags),
+func GetAPILogger(path string) *log.Logger {
+	file := MakeLoggerFile(path)
+
+	return log.New(file, "", log.LstdFlags)
+}
+
+func GetDBLogger(path string) logger.Interface {
+	file := MakeLoggerFile(path)
+
+	return logger.New(
+		log.New(file, "\r\n", log.LstdFlags),
 		logger.Config{
 			SlowThreshold:             time.Second,
 			LogLevel:                  logger.Info,
@@ -46,8 +40,4 @@ func GetLogger(apiFile, DbFile *os.File) *CLogger {
 			IgnoreRecordNotFoundError: false,
 		},
 	)
-	loggerAPI := APIL{log.New(apiFile, "", log.LstdFlags), apiFile}
-	loggerDB := DBL{logger, DbFile}
-
-	return &CLogger{&loggerAPI, &loggerDB}
 }

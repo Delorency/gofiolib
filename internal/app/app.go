@@ -21,21 +21,17 @@ func init() {
 }
 
 func Start() {
-	apiLoggerFile := logger.MakeLoggerFile(cfg.Logger.APIlp)
-	dbLoggerFIle := logger.MakeLoggerFile(cfg.Logger.DBlp)
+	apilogger := logger.GetAPILogger(cfg.Logger.APIlp)
+	dblogger := logger.GetDBLogger(cfg.Logger.DBlp)
 
-	loggers := logger.GetLogger(apiLoggerFile, dbLoggerFIle)
-
-	logger := loggers.APIl.Logger
-
-	db := checkUpDB(loggers.DBl.Logger)
+	db := checkUpDB(dblogger)
 
 	container := container.NewContainer(db)
 
-	server := server.NewHTTPServer(cfg.HTTPServer.Host, cfg.HTTPServer.Port, container)
+	server := server.NewHTTPServer(cfg.HTTPServer.Host, cfg.HTTPServer.Port, container, apilogger)
 
-	logger.Printf("Set IP: %s:%s\n", cfg.HTTPServer.Host, cfg.HTTPServer.Port)
-	logger.Println("Starting server")
+	apilogger.Printf("Set IP: %s:%s\n", cfg.HTTPServer.Host, cfg.HTTPServer.Port)
+	apilogger.Println("Starting server")
 
 	log.Printf("Server work on %s:%s\n", cfg.HTTPServer.Host, cfg.HTTPServer.Port)
 

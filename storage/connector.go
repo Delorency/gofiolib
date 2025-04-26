@@ -14,8 +14,6 @@ func Psql(dbrole, dbpass, dbname, dbhost, dbport string, logger logger.Interface
 		postgres.New(postgres.Config{
 			DSN: fmt.Sprintf("user=%s password=%s dbname=%s host=%v port=%s sslmode=disable TimeZone=Asia/Shanghai",
 				dbrole, dbpass, dbname, dbhost, dbport),
-
-			PreferSimpleProtocol: true,
 		}), &gorm.Config{Logger: logger})
 
 	if err != nil {

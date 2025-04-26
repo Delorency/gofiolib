@@ -2,6 +2,7 @@ package http
 
 import (
 	"fiolib/internal/container"
+	"log"
 
 	hP "fiolib/internal/transport/http/handlers"
 
@@ -17,11 +18,11 @@ func AddMiddleware(router *chi.Mux) *chi.Mux {
 	return router
 }
 
-func NewRouter(cont *container.Container) *chi.Mux {
+func NewRouter(cont *container.Container, logger *log.Logger) *chi.Mux {
 	router := AddMiddleware(chi.NewRouter())
-	handlers := hP.NewPersonHandler(cont.PersonService)
+	handlers := hP.NewPersonHandler(cont.PersonService, logger)
 
-	router.Get("/", handlers.List)
+	router.Get("/person", handlers.Create)
 
 	return router
 }
