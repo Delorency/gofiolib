@@ -7,7 +7,7 @@ import (
 )
 
 type PersonServiceI interface {
-	List(*schemes.Pagination) (*[]models.Person, error)
+	List(*schemes.Pagination, *schemes.Filter) (*[]models.Person, error)
 	Create(*models.Person) error
 	Update(uint, *models.Person) (*models.Person, error)
 	Retrieve(uint) (*models.Person, error)

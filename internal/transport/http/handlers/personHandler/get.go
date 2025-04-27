@@ -5,6 +5,7 @@ import (
 	schemes "fiolib/internal/schemes"
 	e "fiolib/internal/transport/http/error"
 	response "fiolib/internal/transport/http/response"
+	util "fiolib/internal/util"
 	"net/http"
 	"strconv"
 
@@ -55,7 +56,7 @@ func (ph *personHandler) List(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	pag := schemes.Pagination{Limit: limit, Page: page}
-	persons, err := ph.service.List(&pag)
+	persons, err := ph.service.List(&pag, util.GetFilter(r))
 
 	if err != nil {
 		response.NewResponse(
