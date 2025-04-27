@@ -9,6 +9,8 @@ import (
 	"fiolib/internal/models"
 	e "fiolib/internal/transport/http/error"
 	response "fiolib/internal/transport/http/response"
+	sw "fiolib/internal/transport/http/swagger"
+
 	v "fiolib/internal/validator"
 
 	"github.com/go-playground/validator"
@@ -20,13 +22,15 @@ type requestCreate struct {
 	Patronymic string `json:"patronymic" validate:"required"`
 }
 
+var _ = sw.SwaggerPerson{}
+
 // @Summary Создать пользователя
 // @Accept  json
 // @Produce json
 // @Param   person body requestCreate true "Создать пользователя"
-// @Success 201 {object} models.Person
-// @Failure 400 {object} v.ValidateData "Ошибка создания пользователя"
-// @Failure 500 {object} e.NewError "Ошибка создания пользователя"
+// @Success 201 {object} swagger.SwaggerPerson
+// @Failure 400 {object} swagger.SwaggerValidateData "Ошибка создания пользователя"
+// @Failure 500 {object} swagger.SwaggerNewError "Ошибка создания пользователя"
 // @Router  /person [post]
 func (ph *personHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req requestCreate

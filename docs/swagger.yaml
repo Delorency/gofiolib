@@ -1,0 +1,218 @@
+definitions:
+  personhandler.requestCreate:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    required:
+    - name
+    - patronymic
+    - surname
+    type: object
+  personhandler.requestUpdate:
+    properties:
+      age:
+        type: integer
+      gender:
+        type: string
+      name:
+        type: string
+      nat:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    required:
+    - age
+    - gender
+    - name
+    - nat
+    - patronymic
+    - surname
+    type: object
+  swagger.SwaggerNewError:
+    properties:
+      error:
+        type: string
+    type: object
+  swagger.SwaggerPerson:
+    properties:
+      Age:
+        type: integer
+      CreatedAt:
+        type: string
+      DeletedAt:
+        type: string
+      Gender:
+        type: string
+      Id:
+        type: integer
+      Name:
+        type: string
+      Nat:
+        type: string
+      Patronymic:
+        type: string
+      Surname:
+        type: string
+      UpdatedAt:
+        type: string
+    type: object
+  swagger.SwaggerValidateData:
+    properties:
+      error:
+        type: string
+      fields:
+        items:
+          type: string
+        type: array
+    type: object
+info:
+  contact: {}
+paths:
+  /person:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Количество записей на одной странице
+        in: query
+        name: limit
+        type: integer
+      - description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/swagger.SwaggerPerson'
+            type: array
+        "400":
+          description: page должно быть числом > 0
+          schema:
+            $ref: '#/definitions/swagger.SwaggerNewError'
+        "500":
+          description: Ошибка получения данных
+          schema:
+            $ref: '#/definitions/swagger.SwaggerNewError'
+      summary: Получить список пользователей
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Создать пользователя
+        in: body
+        name: person
+        required: true
+        schema:
+          $ref: '#/definitions/personhandler.requestCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/swagger.SwaggerPerson'
+        "400":
+          description: Ошибка создания пользователя
+          schema:
+            $ref: '#/definitions/swagger.SwaggerValidateData'
+        "500":
+          description: Ошибка создания пользователя
+          schema:
+            $ref: '#/definitions/swagger.SwaggerNewError'
+      summary: Создать пользователя
+  /person/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Идентификатор пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Успешно удалено
+        "400":
+          description: Идентификатор должен быть числом
+          schema:
+            $ref: '#/definitions/swagger.SwaggerValidateData'
+        "404":
+          description: Объект не найден
+          schema:
+            $ref: '#/definitions/swagger.SwaggerValidateData'
+      summary: Удалить пользователя
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Идентификатор пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.SwaggerPerson'
+        "400":
+          description: Идентификатор должен быть числом
+          schema:
+            $ref: '#/definitions/swagger.SwaggerNewError'
+        "404":
+          description: Пользователь не найден
+          schema:
+            $ref: '#/definitions/swagger.SwaggerNewError'
+      summary: Получить пользователя по id
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Идентификатор пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Изменить данные пользователя
+        in: body
+        name: person
+        required: true
+        schema:
+          $ref: '#/definitions/personhandler.requestUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.SwaggerPerson'
+        "400":
+          description: Идентификатор должен быть числом
+          schema:
+            $ref: '#/definitions/swagger.SwaggerValidateData'
+        "404":
+          description: Объект не найден
+          schema:
+            $ref: '#/definitions/swagger.SwaggerValidateData'
+        "500":
+          description: Ошибка сервера
+          schema:
+            $ref: '#/definitions/swagger.SwaggerNewError'
+      summary: Изменить данные пользователя
+swagger: "2.0"

@@ -4,6 +4,7 @@ import (
 	l "fiolib/internal/logger"
 	e "fiolib/internal/transport/http/error"
 	response "fiolib/internal/transport/http/response"
+	sw "fiolib/internal/transport/http/swagger"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -11,13 +12,15 @@ import (
 	"github.com/go-chi/chi"
 )
 
+var _ = sw.SwaggerPerson{}
+
 // @Summary Удалить пользователя
 // @Accept  json
 // @Produce json
 // @Param   id path int true "Идентификатор пользователя"
 // @Success 204 "Успешно удалено"
-// @Failure 400 {object} v.ValidateData "Идентификатор должен быть числом"
-// @Failure 404 {object} v.ValidateData "Объект не найден"
+// @Failure 400 {object} swagger.SwaggerValidateData "Идентификатор должен быть числом"
+// @Failure 404 {object} swagger.SwaggerValidateData "Объект не найден"
 // @Router  /person/{id} [delete]
 func (ph *personHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))

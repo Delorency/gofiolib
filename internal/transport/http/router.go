@@ -4,7 +4,10 @@ import (
 	"fiolib/internal/container"
 	"log"
 
+	_ "fiolib/docs"
 	hP "fiolib/internal/transport/http/handlers/personHandler"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -21,6 +24,8 @@ func AddMiddleware(router *chi.Mux) *chi.Mux {
 func NewRouter(cont *container.Container, logger *log.Logger) *chi.Mux {
 	router := AddMiddleware(chi.NewRouter())
 	handlers := hP.NewPersonHandler(cont.PersonService, logger)
+
+	router.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	router.Post("/person", handlers.Create)
 	router.Get("/person", handlers.List)

@@ -11,6 +11,8 @@ import (
 	"net/http"
 	"strconv"
 
+	sw "fiolib/internal/transport/http/swagger"
+
 	"github.com/go-chi/chi"
 	"github.com/go-playground/validator"
 )
@@ -24,16 +26,18 @@ type requestUpdate struct {
 	Nat        string `json:"nat" validate:"required"`
 }
 
+var _ = sw.SwaggerPerson{}
+
 // @Summary Изменить данные пользователя
 // @Accept  json
 // @Produce json
 // @Param   id path int true "Идентификатор пользователя"
 // @Param   person body requestUpdate true "Изменить данные пользователя"
-// @Success 200 {object} models.Person
-// @Failure 400 {object} v.ValidateData "Идентификатор должен быть числом"
-// @Failure 404 {object} v.ValidateData "Объект не найден"
-// @Failure 500 {object} e.NewError "Ошибка обновления пользователя"
-// @Failure 500 {object} e.NewError "Ошибка сервера"
+// @Success 200 {object} swagger.SwaggerPerson
+// @Failure 400 {object} swagger.SwaggerValidateData "Идентификатор должен быть числом"
+// @Failure 404 {object} swagger.SwaggerValidateData "Объект не найден"
+// @Failure 500 {object} swagger.SwaggerNewError "Ошибка обновления пользователя"
+// @Failure 500 {object} swagger.SwaggerNewError "Ошибка сервера"
 // @Router  /person/{id} [put]
 func (ph *personHandler) Update(w http.ResponseWriter, r *http.Request) {
 	var req requestUpdate
