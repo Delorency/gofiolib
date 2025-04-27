@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    container_name: db
+    env_file:
+      - ./internal/configs/.env    
+    environment:
+      POSTGRES_DB: ${DB_NAME} 
+      POSTGRES_USER: ${DB_ROLE} 
+      POSTGRES_PASSWORD: ${DB_PASS} 
+    ports:
+      - "9388:${DB_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: always
+    container_name: fiolib
+    depends_on:
+      - db
+    env_file:
+      - ./internal/configs/.env
+    environment:
+      DB_HOST: db
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_ROLE}
+      DB_PASSWORD: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - "8080:${PORT}"
+
+volumes:
+  postgres_data:
