@@ -3,6 +3,7 @@ package persondb
 import (
 	"fiolib/internal/models"
 	schemes "fiolib/internal/schemes"
+	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -11,7 +12,7 @@ import (
 func (pd *personDB) List(p *schemes.Pagination, f *schemes.Filter) (*[]models.Person, error) {
 	var persons []models.Person
 	query := pd.db.Model(&models.Person{})
-
+	fmt.Println(f.ID)
 	if f.ID > 0 {
 		query = query.Where("id = ?", f.ID)
 	}

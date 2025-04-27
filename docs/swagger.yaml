@@ -87,6 +87,46 @@ paths:
         in: query
         name: page
         type: integer
+      - description: Фильтр по ID
+        in: query
+        name: id
+        type: integer
+      - description: Фильтр по имени
+        in: query
+        name: name
+        type: string
+      - description: Фильтр по фамилии
+        in: query
+        name: surname
+        type: string
+      - description: Фильтр по отчеству
+        in: query
+        name: patronymic
+        type: string
+      - description: Фильтр по возрасту
+        in: query
+        name: age
+        type: integer
+      - description: Фильтр по полу
+        in: query
+        name: gender
+        type: string
+      - description: Фильтр по национальности
+        in: query
+        name: nat
+        type: string
+      - description: 'Фильтр по дате создания (формат: 2006-01-24)'
+        in: query
+        name: created_at
+        type: string
+      - description: 'Фильтр по дате обновления (формат: 2006-01-24)'
+        in: query
+        name: updated_at
+        type: string
+      - description: 'Фильтр по дате удаления (формат: 2006-01-24)'
+        in: query
+        name: deleted_at
+        type: string
       produces:
       - application/json
       responses:

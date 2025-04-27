@@ -21,6 +21,16 @@ var _ = sw.SwaggerPerson{}
 // @Produce json
 // @Param   limit query int false "Количество записей на одной странице"
 // @Param   page query int false "Номер страницы"
+// @Param   id          query int   false "Фильтр по ID"
+// @Param   name        query string false "Фильтр по имени"
+// @Param   surname     query string false "Фильтр по фамилии"
+// @Param   patronymic  query string false "Фильтр по отчеству"
+// @Param   age         query int  false "Фильтр по возрасту"
+// @Param   gender      query string false "Фильтр по полу"
+// @Param   nat         query string false "Фильтр по национальности"
+// @Param   created_at  query string false "Фильтр по дате создания (формат: 2006-01-24)"
+// @Param   updated_at  query string false "Фильтр по дате обновления (формат: 2006-01-24)"
+// @Param   deleted_at  query string false "Фильтр по дате удаления (формат: 2006-01-24)"
 // @Success 200 {array} swagger.SwaggerPerson
 // @Failure 400 {object} swagger.SwaggerNewError "limit должно быть числом > 0"
 // @Failure 400 {object} swagger.SwaggerNewError "page должно быть числом > 0"

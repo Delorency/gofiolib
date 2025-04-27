@@ -12,8 +12,13 @@ func GetFilter(r *http.Request) *schemes.Filter {
 	if err != nil {
 		age = 0
 	}
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 0 {
+		id = 0
+	}
 
 	return &schemes.Filter{
+		ID:         uint(id),
 		Name:       r.URL.Query().Get("name"),
 		Surname:    r.URL.Query().Get("surname"),
 		Patronymic: r.URL.Query().Get("patronymic"),
