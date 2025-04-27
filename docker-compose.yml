@@ -29,7 +29,7 @@ services:
       DB_PASSWORD: ${DB_PASS}
       DB_NAME: ${DB_NAME}
     ports:
-      - "${DOCKER_PORT}:${PORT}"
+      - "${DOCKER_HOST_PORT}:${PORT}"
 
 volumes:
   postgres_data:
