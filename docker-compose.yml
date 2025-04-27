@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: ${DB_ROLE} 
       POSTGRES_PASSWORD: ${DB_PASS} 
     ports:
-      - "9388:${DB_PORT}"
+      - "${DOCKER_HOST_DB_PORT}:${DB_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -29,7 +29,7 @@ services:
       DB_PASSWORD: ${DB_PASS}
       DB_NAME: ${DB_NAME}
     ports:
-      - "8080:${PORT}"
+      - "${DOCKER_PORT}:${PORT}"
 
 volumes:
   postgres_data:
