@@ -1,4 +1,4 @@
-package handlers
+package personhandler
 
 import (
 	personservice "fiolib/internal/services/personService"

@@ -4,7 +4,7 @@ import (
 	"fiolib/internal/container"
 	"log"
 
-	hP "fiolib/internal/transport/http/handlers"
+	hP "fiolib/internal/transport/http/handlers/personHandler"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"

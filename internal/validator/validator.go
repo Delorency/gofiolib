@@ -8,15 +8,15 @@ import (
 	"github.com/go-playground/validator"
 )
 
-type validateData struct {
+type ValidateData struct {
 	e.HTTPError
 	Fields []string `json:"fields"`
 }
 
 // Функция обработки ошибок валидации
-func HandleValidationErrors(w http.ResponseWriter, err error) (*validateData, bool) {
+func HandleValidationErrors(w http.ResponseWriter, err error) (*ValidateData, bool) {
 	if validationErrors, ok := err.(validator.ValidationErrors); ok {
-		var vd validateData
+		var vd ValidateData
 
 		vd.Fields = []string{}
 

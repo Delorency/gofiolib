@@ -1,4 +1,4 @@
-package handlers
+package personhandler
 
 import (
 	l "fiolib/internal/logger"
@@ -11,6 +11,16 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// @Summary Получить список пользователей
+// @Accept  json
+// @Produce json
+// @Param   limit query int false "Количество записей на одной странице"
+// @Param   page query int false "Номер страницы"
+// @Success 200 {array} models.Person
+// @Failure 400 {object} e.NewError "limit должно быть числом > 0"
+// @Failure 400 {object} e.NewError "page должно быть числом > 0"
+// @Failure 500 {object} e.NewError "Ошибка получения данных"
+// @Router  /person [get]
 func (ph *personHandler) List(w http.ResponseWriter, r *http.Request) {
 	var limit, page int
 	var err error
@@ -60,16 +70,25 @@ func (ph *personHandler) List(w http.ResponseWriter, r *http.Request) {
 	)
 	ph.logger.Println(l.GetLogEntry(r, http.StatusOK, []byte{}))
 }
+
+// @Summary Получить пользователя по id
+// @Accept  json
+// @Produce json
+// @Param   id path int true "Идентификатор пользователя"
+// @Success 200 {array} models.Person
+// @Failure 400 {object} e.NewError "Идентификатор должен быть числом"
+// @Failure 404 {object} e.NewError "Пользователь не найден"
+// @Router  /person/{id} [get]
 func (ph *personHandler) Retrieve(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 	if err != nil {
 		response.NewResponse(
 			e.NewError("Идентификатор должен быть числом"),
-			http.StatusBadGateway,
+			http.StatusBadRequest,
 			w,
 		)
-		ph.logger.Println(l.GetLogEntry(r, http.StatusBadGateway, []byte{}))
+		ph.logger.Println(l.GetLogEntry(r, http.StatusBadRequest, []byte{}))
 		return
 	}
 

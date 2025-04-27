@@ -1,43 +1,35 @@
-package handlers
+package personhandler
 
 import (
 	"encoding/json"
+	"io"
+	"net/http"
+
 	l "fiolib/internal/logger"
 	"fiolib/internal/models"
 	e "fiolib/internal/transport/http/error"
 	response "fiolib/internal/transport/http/response"
 	v "fiolib/internal/validator"
-	"io"
-	"net/http"
-	"strconv"
 
-	"github.com/go-chi/chi"
 	"github.com/go-playground/validator"
 )
 
-type requestUpdate struct {
+type requestCreate struct {
 	Name       string `json:"name" validate:"required"`
 	Surname    string `json:"surname" validate:"required"`
 	Patronymic string `json:"patronymic" validate:"required"`
-	Age        uint8  `json:"age" validate:"required"`
-	Gender     string `json:"gender" validate:"required"`
-	Nat        string `json:"nat" validate:"required"`
 }
 
-func (ph *personHandler) Update(w http.ResponseWriter, r *http.Request) {
-	var req requestUpdate
-
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-
-	if err != nil {
-		response.NewResponse(
-			e.NewError("Идентификатор должен быть числом"),
-			http.StatusBadGateway,
-			w,
-		)
-		ph.logger.Println(l.GetLogEntry(r, http.StatusBadGateway, []byte{}))
-		return
-	}
+// @Summary Создать пользователя
+// @Accept  json
+// @Produce json
+// @Param   person body requestCreate true "Создать пользователя"
+// @Success 201 {object} models.Person
+// @Failure 400 {object} v.ValidateData "Ошибка создания пользователя"
+// @Failure 500 {object} e.NewError "Ошибка создания пользователя"
+// @Router  /person [post]
+func (ph *personHandler) Create(w http.ResponseWriter, r *http.Request) {
+	var req requestCreate
 
 	bodyBytes, _ := io.ReadAll(r.Body)
 
@@ -64,23 +56,21 @@ func (ph *personHandler) Update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data := models.Person{Name: req.Name, Surname: req.Surname, Patronymic: req.Patronymic, Age: req.Age, Gender: req.Gender, Nat: req.Nat}
+	obj := models.Person{Name: req.Name, Surname: req.Surname, Patronymic: req.Patronymic}
 
-	obj, err := ph.service.Update(uint(id), &data)
-	if err != nil {
+	if err := ph.service.Create(&obj); err != nil {
 		response.NewResponse(
-			e.NewError("Ошибка обновления пользователя"),
+			e.NewError("Ошибка создания пользователя"),
 			http.StatusInternalServerError,
 			w,
 		)
 		ph.logger.Println(l.GetLogEntry(r, http.StatusInternalServerError, bodyBytes))
 		return
 	}
-
 	response.NewResponse(
 		obj,
-		http.StatusOK,
+		http.StatusCreated,
 		w,
 	)
-	ph.logger.Println(l.GetLogEntry(r, http.StatusOK, bodyBytes))
+	ph.logger.Println(l.GetLogEntry(r, http.StatusCreated, bodyBytes))
 }
