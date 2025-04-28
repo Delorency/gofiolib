@@ -36,7 +36,7 @@ func GetDBLogger(path string) logger.Interface {
 		logger.Config{
 			SlowThreshold:             time.Second,
 			LogLevel:                  logger.Info,
-			Colorful:                  true,
+			Colorful:                  false,
 			IgnoreRecordNotFoundError: false,
 		},
 	)
