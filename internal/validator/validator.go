@@ -2,7 +2,7 @@ package validator
 
 import (
 	"net/http"
-
+	"strings"
 	e "fiolib/internal/transport/http/error"
 
 	"github.com/go-playground/validator"
@@ -21,7 +21,7 @@ func HandleValidationErrors(w http.ResponseWriter, err error) (*ValidateData, bo
 		vd.Fields = []string{}
 
 		for _, fieldErr := range validationErrors {
-			vd.Fields = append(vd.Fields, fieldErr.Field())
+			vd.Fields = append(vd.Fields, strings.ToLower(fieldErr.Field()))
 		}
 		vd.Err = "Не все поля заполнены"
 		return &vd, true
