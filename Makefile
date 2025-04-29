@@ -1,5 +1,5 @@
 dockerup:
-	docker compose --env-file=./internal/configs/.env --env-file=./internal/configs/.docker_env up -d
+	docker compose --env-file=./configs/.env --env-file=./configs/.docker_env up -d
 
 terminalup:
 	go run ./cmd/gofiolib/main.go

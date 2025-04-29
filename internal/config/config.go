@@ -32,7 +32,7 @@ type Config struct {
 }
 
 func MustLoad() *Config {
-	godotenv.Load("./internal/configs/.env")
+	godotenv.Load("./configs/.env")
 
 	var cfgHttpServer ConfigHTTPServer
 	var cfgDatabase ConfigDatabase

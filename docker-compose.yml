@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./internal/configs/.env
+      - ./configs/.env
     environment:
       DB_HOST: db
     ports:
