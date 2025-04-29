@@ -6,6 +6,7 @@ import (
 	"fiolib/internal/logger"
 	connector "fiolib/storage"
 	"fiolib/storage/migrations"
+	"fmt"
 	"log"
 
 	server "fiolib/internal/transport/http"
@@ -21,8 +22,8 @@ func init() {
 }
 
 func Start() {
-	apilogger := logger.GetAPILogger(cfg.Logger.APIlp)
-	dblogger := logger.GetDBLogger(cfg.Logger.DBlp)
+	apilogger := logger.GetAPILogger(fmt.Sprintf("%s/%s", cfg.Logger.LogsDir, cfg.Logger.APIlp))
+	dblogger := logger.GetDBLogger(fmt.Sprintf("%s/%s", cfg.Logger.LogsDir, cfg.Logger.DBlp))
 
 	db := checkUpDB(dblogger)
 

@@ -21,8 +21,9 @@ type ConfigDatabase struct {
 }
 
 type ConfigLogger struct {
-	APIlp string `env:"APILOGFILEPATH"`
-	DBlp  string `env:"DBLOGFILEPATH"`
+	APIlp   string `env:"APILOGFILENAME"`
+	DBlp    string `env:"DBLOGFILENAME"`
+	LogsDir string `env:"LOGSDIR"`
 }
 
 type Config struct {
